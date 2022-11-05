@@ -1,6 +1,4 @@
 Install MySql
-https://dev.mysql.com/downloads/mysql/
-
 
 CREATE USER 'omar123'@'localhost' IDENTIFIED BY 'password123';
 GRANT ALL PRIVILEGES ON *.* TO 'omar123'@'localhost' WITH GRANT OPTION;
@@ -31,6 +29,10 @@ MIGRATE AND SEED:
 php artisan migrate
 
 php artisan db:seed --class=userSeeder
+
+php artisan db:seed --class=orderSeeder
+
+php artisan db:seed --class=productSeeder
 
 php artisan key:generate
 
