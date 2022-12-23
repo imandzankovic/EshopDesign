@@ -17,6 +17,7 @@ class CreateUserModelsTable extends Migration
             $table->id();
             $table->string('email')->unique();
             $table->string('password');
+            $table->boolean('isAdmin');
             $table->timestamps();
         });
     }

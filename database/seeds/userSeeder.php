@@ -16,6 +16,13 @@ class userSeeder extends Seeder
         DB::table('user_models')->insert([
             'email'=>'admin@admin.com',
             'password'=>'admin',
+            'isAdmin'=>true
+        ]);
+
+        DB::table('user_models')->insert([
+            'email'=>'user@user.com',
+            'password'=>'user',
+            'isAdmin'=>false
         ]);
     }
 }

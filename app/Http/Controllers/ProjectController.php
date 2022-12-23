@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\productModel;
+use App\projectModel;
+use App\taskModel;
 use App\userModel;
 use Session;
 
-class ProductController extends Controller
+class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,12 +17,13 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products=productModel::all();
+        $projects=projectModel::all();
+        $tasks=taskModel::all();
         $data=array();
         if(Session::has('loginId')){
             $data=userModel::where('id','=', Session::get('loginId'))->first();
         }
-        return view('showAllProducts')->with('products', $products)->with('data', $data);
+        return view('showAllProjects')->with('projects', $projects)->with('tasks', $tasks)->with('data',$data);
     }
 
     /**
@@ -42,23 +44,38 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $orderObj = new productModel;
-        $orderObj->name = $request->name;
-        $orderObj->barcode = $request->barcode;
-        $orderObj->save();
-        return redirect('products');
+        //dd($request);
+        
+        $tasks = $request->input('tasks');
+        foreach ($tasks as $task_Id){ 
+        $projectObj = new projectModel;
+        $projectObj->name = $request->name;
+        // $projectObj->customer = $request->customer;
+        $projectObj->description =$request->description;
+        $projectObj->task_id = $task_Id;
+        
+        $projectObj->save();
     }
+        return redirect('projects');
+    }
+
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // public function show($id)
+    // {
+       // $projectToShow = projectModel::find($id);
+       // $projectToDelete->delete();
+       // return redirect('projects/{projectToShow}');
+    //}
     public function show($id)
-    {
-        //
+    {   
+        $projects=projectModel::find($id);   
+        return view('showOneProject')->with('projects', $projects);
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -67,7 +84,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -79,11 +96,13 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $orderObj = productModel::find($id);
-        $orderObj->name = $request->name;
-        $orderObj->barcode = $request->barcode;
-        $orderObj->save();
-        return redirect('products');
+        $projectObj = projectModel::find($id);
+        $projectObj->name = $request->name;
+        // $projectObj->customer = $request->customer;
+        $projectObj->description = $request->description;
+        $projectObj->task_id = $request->task_id;
+        $projectObj->save();
+        return redirect('projects');
     }
 
     /**
@@ -94,8 +113,9 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $productToDelete = productModel::find($id);
-        $productToDelete->delete();
-        return redirect('products');
+        $projectToDelete = projectModel::find($id);
+        $projectToDelete->delete();
+        return redirect('projects');
     }
+
 }

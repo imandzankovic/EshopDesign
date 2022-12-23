@@ -18,7 +18,7 @@ class CustomAuthController extends Controller
      if($user){
         if($user->password==$request->password){
              $request->session()->put('loginId',$user->id); 
-             return redirect('orders');
+             return redirect('projects');
         }else{
             return back()->with('error', 'Password is not correct');
         }
@@ -32,7 +32,7 @@ class CustomAuthController extends Controller
         if(Session::has('loginId')){
             $data=userModel::where('id','=', Session::get('loginId'))->first();
         }
-        return view('orders', compact('data'));
+        return view('projects', compact('data'));
     }
 
     public function logout(){

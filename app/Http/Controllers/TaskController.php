@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\orderModel;
-use App\productModel;
+use App\taskModel;
 use App\userModel;
 use Session;
 
-class OrderController extends Controller
+class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,13 +16,13 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders=orderModel::all();
-        $products=productModel::all();
+        $tasks=taskModel::all();
+        $users=userModel::all();
         $data=array();
         if(Session::has('loginId')){
             $data=userModel::where('id','=', Session::get('loginId'))->first();
         }
-        return view('showAllOrders')->with('orders', $orders)->with('products', $products)->with('data',$data);
+        return view('showAllTasks')->with('tasks', $tasks)->with('users', $users)->with('data', $data);
     }
 
     /**
@@ -44,32 +43,28 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $orderObj = new orderModel;
-        $orderObj->adress = $request->adress;
-        $orderObj->customer = $request->customer;
-        $orderObj->phone = $request->phone;
-        $orderObj->product_id = $request->product_id;
-        $orderObj->save();
-        return redirect('orders');
-    }
+        //dd($request);
 
+        $taskObj = new taskModel;
+        $taskObj->name = $request->name;
+        $taskObj->description = $request->description;
+        $taskObj->details = $request->details;
+        $taskObj->done = $request->has('done');
+        $taskObj->user_id = $request->user_id;
+        $taskObj->save();
+        return redirect('tasks');
+    }
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function show($id)
-    // {
-       // $orderToShow = orderModel::find($id);
-       // $orderToDelete->delete();
-       // return redirect('orders/{orderToShow}');
-    //}
     public function show($id)
-    {   
-        $orders=orderModel::find($id);   
-        return view('showOneOrder')->with('orders', $orders);
+    {
+        //
     }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -78,7 +73,7 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        
+        //
     }
 
     /**
@@ -90,13 +85,14 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $orderObj = orderModel::find($id);
-        $orderObj->adress = $request->adress;
-        $orderObj->customer = $request->customer;
-        $orderObj->phone = $request->phone;
-        $orderObj->product_id = $request->product_id;
-        $orderObj->save();
-        return redirect('orders');
+        $taskObj = taskModel::find($id);
+        $taskObj->name = $request->name;
+        $taskObj->description = $request->description;
+        $taskObj->details = $request->details;
+        $taskObj->done = $request->has('done');
+        $taskObj->user_id = $request->user_id;
+        $taskObj->save();
+        return redirect('tasks');
     }
 
     /**
@@ -107,17 +103,8 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        $orderToDelete = orderModel::find($id);
-        $orderToDelete->delete();
-        return redirect('orders');
+        $taskToDelete = taskModel::find($id);
+        $taskToDelete->delete();
+        return redirect('tasks');
     }
-
-    public function getMinimum(Request $request){
-        $array= $request->input;
-        $n = count($array);
-        $min = $array[0];
-        for ($i = 1;$i < $n;$i++) if ($min > $array[$i]) $min = $array[$i];
-        return $min;
-     }
-    
 }

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Dashboard - Taslema</title>
-    <meta name="description" content="Purchase and control your orders - has never been more simple!">
+    <meta name="description" content="Purchase and control your projects - has never been more simple!">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
@@ -66,21 +66,21 @@
                                     <table class="table table-striped table tablesorter" id="ipi-table">
                                         <thead class="thead-dark">
                                             <tr>
-                                                <th class="text-center">Order ID</th>
-                                                <th class="text-center">Adress</th>
+                                                <th class="text-center">Project ID</th>
+                                                <th class="text-center">Name</th>
                                                 <th class="text-center">Customer Info</th>
-                                                <th class="text-center">Phone</th>
-                                                <th class="text-center">Product</th>
+                                                <th class="text-center">Description</th>
+                                                <th class="text-center">Task</th>
                                               
 
                                             </tr>
                                         </thead>
                                         <tbody class="text-center">
-                                        <td>{{$orders->id}}</td>
-                                        <td>{{$orders->adress}}</td>
-                                        <td>{{$orders->customer}}</td>
-                                        <td>{{$orders->phone}}</td>
-                                        <td>{{$orders->myproduct[0]->name}}</td>
+                                        <td>{{$projects->id}}</td>
+                                        <td>{{$projects->name}}</td>
+                                        <td>{{$projects->customer}}</td>
+                                        <td>{{$projects->description}}</td>
+                                        <td>{{$projects->mytask[0]->name}}</td>
                                         <td>
                                         </tbody>
                                     </table>
@@ -98,7 +98,7 @@
                     <div class="text-center my-auto copyright"><span>Copyright © Taslema 2022</span></div>
                 </div>
             </footer>
-        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+        </div><a class="bproject rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/theme.js"></script>
